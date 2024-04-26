@@ -1,8 +1,7 @@
 // This script bulk assigns existing members to a team, based on the members's email, which is matched from the "../.member-emails" file.
-// Swagger documentation reference: multiple
 
 // Load required modules and environment variables for script configuration.
-require('dotenv').config({ path: 'rest-api-recipes/.env' });
+require('dotenv').config({ path: 'sigma-api-recipes/.env' });
 const getBearerToken = require('../get-access-token'); // Function to obtain an authentication token.
 const axios = require('axios'); // HTTP client for making requests to Sigma's API.
 const fs = require('fs'); // File system module to read the list of emails from a file.
