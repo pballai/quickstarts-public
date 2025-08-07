@@ -101,6 +101,12 @@
       .content {
         position: relative;
       }
+      
+      /* Ensure our loading overlay is on top of iframe */
+      .embed-loading-overlay {
+        z-index: 9999 !important;
+        pointer-events: auto;
+      }
     </style>
   </body>
   <script>
