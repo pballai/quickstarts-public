@@ -4,7 +4,7 @@ A comprehensive collection of examples demonstrating Sigma Computing's embedding
 
 ## Overview
 
-This project provides eight distinct QuickStart examples that progressively demonstrate Sigma's embedding features:
+This project provides nine distinct QuickStart examples that progressively demonstrate Sigma's embedding features:
 
 1. **Getting Started** - Basic embedding with JWT authentication
 2. **Embed Bookmarks** - Direct Sigma API bookmark functionality  
@@ -14,6 +14,7 @@ This project provides eight distinct QuickStart examples that progressively demo
 6. **Custom Loading Screen** - Enhanced embedding with custom loading overlays
 7. **Menu Control & Page Navigation** - Advanced menu visibility control and page navigation
 8. **Set Default Workbook** - User-specific default workbook management with persistent storage
+9. **Workbook Carousel** - Interactive workbook selection using visual carousel interface
 
 Each QuickStart includes a complete web interface with user switching, debug information, and comprehensive documentation.
 
@@ -54,6 +55,7 @@ embedding_qs_series_2_api_use_cases/
 │   ├── api-embed-custom-loader/     # Custom loading overlay implementation
 │   ├── api-embed-hide-menu-page-nav/ # Menu control and page navigation
 │   ├── api-embed-default-workbook-users/ # User default workbook management
+│   ├── api-embed-carousel/          # Interactive workbook carousel selection
 │   └── styles/                      # Shared CSS styles
 ├── routes/                          # Express.js API routes
 │   └── api/                         # API endpoints
@@ -206,6 +208,30 @@ This approach enables a complete export management experience directly within th
 
 **Best For**: Applications requiring personalized user experiences with workbook preferences and robust state management
 
+### 9. Workbook Carousel (`/api-embed-carousel`)
+**Purpose**: Implement interactive workbook selection using visual carousel interface with user-specific content filtering
+
+**Features**:
+- Visual workbook browser with thumbnail previews and smooth navigation
+- User-specific content filtering using Sigma's member-based API approach
+- Stable carousel implementation designed for reliable performance
+- Previous/next button navigation with keyboard support
+- Immediate visual feedback with loading indicators and selected states
+- Dynamic workbook discovery based on selected user permissions
+- Fixed positioning to avoid layout conflicts
+- Permission-based workbook access (shows all workbooks accessible via List member files endpoint)
+
+**Security Architecture**:
+It is important to understand how the workbooks displayed in the carousel are selected. Sigma is very flexible and workbooks can be stored in multiple locations, leading to content sprawl and the risk of exposing content to unauthorized users, whether embedded or not.
+
+For that reason, it is best practice to store workbooks in dedicated workspaces and share those workspaces with specific users or teams. In the embed context, maintaining a 1:1 relationship between workspaces and user groups is ideal to simplify management and ensure proper access control.
+
+Our implementation uses the List member files endpoint, which returns all documents and folders accessible to a specific user. In our sample application, when a user is selected, we call the API endpoint, pass the user's member ID, and set a type filter for workbooks only. However, we did not take the additional step of filtering workbooks based on their storage location or path.
+
+For enhanced security, you could implement path-based filtering - for example, if you wanted to only allow users access to content in the `Embed_Users` workspace, you could use the user's team membership to filter the results accordingly. This additional filtering helps prevent accidental exposure of content that users shouldn't have access to, even if Sigma's permission system technically allows it.
+
+**Best For**: Applications requiring intuitive workbook discovery interfaces with visual selection and robust access control
+
 ## Configuration
 
 ### Environment Variables
@@ -259,6 +285,12 @@ The application includes user provisioning capabilities:
 - `GET /api/default-workbook/:userEmail` - Get user's default workbook
 - `POST /api/default-workbook` - Set workbook as user's default
 - `DELETE /api/default-workbook/:userEmail` - Clear user's default workbook
+
+### Workbook Copy/Create Endpoints
+- `GET /api/workbook-copy-create/all-workbooks` - List workbooks accessible to specific user
+- `GET /api/workbook-copy-create/my-documents-workbooks` - List user's My Documents workbooks
+- `POST /api/workbook-copy-create/copy` - Copy workbook to specified location
+- `POST /api/workbook-copy-create/create` - Create new workbook from template
 
 ### Content Discovery
 - `GET /api/pages` - List pages in a workbook (with hidden page filtering)
