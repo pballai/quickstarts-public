@@ -3,10 +3,10 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "BASE_URL": "https://app.sigmacomputing.com/<org>/workbook/<name>-<workbookId>",
-    "CLIENT_ID": "<your-embed-client-id>",
-    "SECRET": "<your-embed-secret>",
-    "ACCOUNT_TYPE": "Embed",
+    "BASE_URL": "https://app.sigmacomputing.com/quick-starts-fundamentals/workbook/Embedding-into-Sharepoint-27gZcOJlF4veIw6Hhrjqxs",
+    "CLIENT_ID": "REDACTED",
+    "SECRET": "REDACTED",
+    "ACCOUNT_TYPE": "View",
     "TEAM": "Embed_Users",
     "SESSION_LENGTH": "300",
     "DEV_EMAIL": "sharepoint@test.com"
