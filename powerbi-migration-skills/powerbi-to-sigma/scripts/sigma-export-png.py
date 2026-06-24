@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """sigma-export-png.py — render a Sigma workbook page or element to PNG via the
-REST export API, for VISUAL verification (more reliable than MCP SQL queries for
-sort-dependent aggregates like Last()/First() KPIs, which SQL misreads).
+REST export API, for VISUAL QA of a migrated workbook (Phase 4: side-by-side
+against the source Looker dashboard).
+
+A PNG is more reliable than an MCP SQL query for catching LAYOUT/render problems —
+hidden KPI titles, orphaned filters, overlapping tiles, wrong chart kinds — that a
+numeric parity check can't see.
 
 POST /v2/workbooks/{id}/export {pageId|elementId, format:{type:"png",pixelWidth,pixelHeight}}
   -> {queryId, jobComplete}; then GET /v2/query/{queryId}/download until the PNG is ready.
 
-Env: SIGMA_BASE_URL + SIGMA_API_TOKEN (eval "$(get-token.sh)").
+Env: SIGMA_BASE_URL + SIGMA_API_TOKEN (eval "$(scripts/get-token.sh)").
 Usage:
   python3 sigma-export-png.py --workbook <id> --page <pageId> --out /tmp/x.png
   python3 sigma-export-png.py --workbook <id> --element <elId> --out /tmp/x.png [--w 1600 --h 900]
